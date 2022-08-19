@@ -2,10 +2,11 @@ package com.example.newsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewsItemClicked {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val items = fetchData()
-        val adapter = NewsListAdapter(items)
+        val adapter = NewsListAdapter(items, this)
 
         recyclerView.adapter = adapter
     }
@@ -25,5 +26,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         return list
+    }
+
+    override fun onItemClicked(item: String) {
+        Toast.makeText(this, "Clicked item: $item", Toast.LENGTH_LONG).show()
     }
 }
